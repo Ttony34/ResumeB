@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --color-primary: #1a365d; /* deep navy for trust and professional authority */
+    --color-primary-foreground: #ffffff; /* white */
+    --color-secondary: #319795; /* vibrant teal for growth and opportunity moments */
+    --color-secondary-foreground: #ffffff; /* white */
+    --color-accent: #38a169; /* success green for achievements and positive reinforcement */
+    --color-accent-foreground: #ffffff; /* white */
+    
+    /* Background & Surface */
+    --color-background: #f7fafc; /* clean canvas for content focus - gray-50 */
+    --color-foreground: #2d3748; /* strong readability for extended content - gray-800 */
+    --color-card: #ffffff; /* white */
+    --color-card-foreground: #2d3748; /* gray-800 */
+    --color-popover: #ffffff; /* white */
+    --color-popover-foreground: #2d3748; /* gray-800 */
+    --color-muted: #edf2f7; /* subtle elevation and component separation - gray-100 */
+    --color-muted-foreground: #718096; /* clear hierarchy without harsh contrast - gray-500 */
+    
+    /* Interactive Elements */
+    --color-border: #e2e8f0; /* light gray for minimal borders - gray-200 */
+    --color-input: #ffffff; /* white */
+    --color-ring: #319795; /* vibrant teal for focus states */
+    
+    /* Status Colors */
+    --color-success: #38a169; /* career wins and positive feedback - green-500 */
+    --color-success-foreground: #ffffff; /* white */
+    --color-warning: #ed8936; /* gentle urgency for optimization suggestions - orange-400 */
+    --color-warning-foreground: #ffffff; /* white */
+    --color-error: #e53e3e; /* clear problem identification without alarm - red-500 */
+    --color-error-foreground: #ffffff; /* white */
+    --color-destructive: #e53e3e; /* red-500 */
+    --color-destructive-foreground: #ffffff; /* white */
+    
+    /* Additional Brand Colors */
+    --color-surface: #edf2f7; /* subtle elevation and component separation - gray-100 */
+    --color-text-secondary: #718096; /* clear hierarchy without harsh contrast - gray-500 */
+    --color-conversion-accent: #ed8936; /* warm orange for urgency and action - orange-400 */
+    --color-trust-builder: #38a169; /* success green for trust building - green-500 */
+    --color-cta: #2b6cb0; /* professional blue for conversion actions - blue-600 */
+    
+    /* Spacing & Layout */
+    --radius: 0.5rem; /* 8px border radius */
+    --shadow-subtle: 0 4px 6px -1px rgba(26, 54, 93, 0.07);
+    --shadow-premium: 0 20px 40px rgba(26, 54, 93, 0.15);
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+  }
+  
+  .font-accent {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+  
+  .shadow-premium {
+    box-shadow: var(--shadow-premium);
+  }
+  
+  .gradient-career {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer components {
+.btn-primary  {
+    @apply bg-secondary text-secondary-foreground transition-all duration-300 ease-out;
+  }
+.btn-conversion  {
+    @apply bg-conversion-accent text-white hover:-translate-y-0.5 transition-all duration-300 ease-out;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 ease-out hover:scale-105 hover:shadow-premium;
+  }
+  
+  .template-card {
+    @apply bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-premium;
+  }
+  
+  .pulse-ai {
+    animation: pulse-ai 2s infinite;
+  }
+  
+  @keyframes pulse-ai {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+  }
+  
+  .breathing-animation {
+    animation: breathing 2s infinite;
+  }
+  
+  @keyframes breathing {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 1;
+    }
+  }
+  
+  .float-trust {
+    animation: float-trust 4s infinite;
+  }
+  
+  @keyframes float-trust {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
