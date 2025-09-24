@@ -106,10 +106,12 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Button variant="ghost" size="sm">
-              <Icon name="LogIn" size={16} className="mr-2" />
-              Sign In
-            </Button>
+            <Link to="/sign-in">
+              <Button variant="ghost" size="sm">
+                <Icon name="LogIn" size={16} className="mr-2" />
+                Sign In
+              </Button>
+            </Link>
             <Button variant="default" size="sm" className="bg-secondary hover:bg-secondary/90">
               <Icon name="Zap" size={16} className="mr-2" />
               Start Building
@@ -171,10 +173,12 @@ const Header = () => {
             </nav>
             
             <div className="mt-6 pt-4 border-t border-border space-y-3">
-              <Button variant="ghost" fullWidth className="justify-start">
-                <Icon name="LogIn" size={18} className="mr-3" />
-                Sign In
-              </Button>
+              <Link to="/sign-in">
+                <Button variant="ghost" fullWidth className="justify-start">
+                  <Icon name="LogIn" size={18} className="mr-3" />
+                  Sign In
+                </Button>
+              </Link>
               <Button variant="default" fullWidth className="justify-start bg-secondary hover:bg-secondary/90">
                 <Icon name="Zap" size={18} className="mr-3" />
                 Start Building

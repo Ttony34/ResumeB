@@ -47,7 +47,7 @@ const HeroSection = () => {
   }, [featuredTemplates?.length]);
 
   return (
-    <section className="relative min-h-screen bg-gradient-career overflow-hidden">
+    <section className="relative min-h-screen gradient-career overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { exportResumeWithNotification } from '../../../utils/pdfExport';
 
 const ResumePreview = ({ data, selectedTemplate }) => {
   const { personalInfo, experience, education, skills } = data;
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportMessage, setExportMessage] = useState('');
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -10,8 +13,32 @@ const ResumePreview = ({ data, selectedTemplate }) => {
     return date?.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   };
 
+  const handlePDFExport = async () => {
+    setIsExporting(true);
+    setExportMessage('');
+    
+    const fileName = personalInfo?.fullName ? 
+      `${personalInfo.fullName.replace(/\s+/g, '_')}_Resume` : 
+      'ResumeForge_Resume';
+    
+    await exportResumeWithNotification(
+      'resume-template',
+      fileName,
+      (message) => {
+        setExportMessage('✓ ' + message);
+        setTimeout(() => setExportMessage(''), 3000);
+      },
+      (message) => {
+        setExportMessage('✗ ' + message);
+        setTimeout(() => setExportMessage(''), 5000);
+      }
+    );
+    
+    setIsExporting(false);
+  };
+
   const ModernTemplate = () => (
-    <div className="bg-white text-gray-900 p-8 shadow-lg rounded-lg max-w-2xl mx-auto">
+    <div id="resume-template" className="bg-white text-gray-900 p-8 shadow-lg rounded-lg max-w-2xl mx-auto">
       {/* Header */}
       <div className="border-b-2 border-blue-600 pb-6 mb-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{personalInfo?.fullName || 'Your Name'}</h1>
@@ -206,11 +233,31 @@ const ResumePreview = ({ data, selectedTemplate }) => {
             <button className="p-2 hover:bg-muted rounded-lg transition-colors" title="Zoom In">
               <Icon name="ZoomIn" size={16} className="text-text-secondary" />
             </button>
-            <button className="p-2 hover:bg-muted rounded-lg transition-colors" title="Download PDF">
-              <Icon name="Download" size={16} className="text-text-secondary" />
+            <button 
+              onClick={handlePDFExport}
+              disabled={isExporting}
+              className="p-2 hover:bg-muted rounded-lg transition-colors disabled:opacity-50" 
+              title={isExporting ? 'Generating PDF...' : 'Download PDF'}
+            >
+              <Icon 
+                name={isExporting ? "Loader2" : "Download"} 
+                size={16} 
+                className={`text-text-secondary ${isExporting ? 'animate-spin' : ''}`} 
+              />
             </button>
           </div>
         </div>
+        
+        {/* Export Status Message */}
+        {exportMessage && (
+          <div className={`px-4 py-2 text-sm ${
+            exportMessage.startsWith('✓') 
+              ? 'bg-accent/10 text-accent border-accent/20' 
+              : 'bg-error/10 text-error border-error/20'
+          } border rounded-lg mx-4`}>
+            {exportMessage}
+          </div>
+        )}
       </div>
 
       <div className="p-4">

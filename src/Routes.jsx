@@ -9,6 +9,7 @@ import UserDashboard from './pages/user-dashboard';
 import AboutResumeForge from './pages/about-resume-forge';
 import ResumeBuilderStudio from './pages/resume-builder-studio';
 import Homepage from './pages/homepage';
+import SignIn from './pages/sign-in';
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
         <Route path="/about-resume-forge" element={<AboutResumeForge />} />
         <Route path="/resume-builder-studio" element={<ResumeBuilderStudio />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
       </RouterRoutes>
       </ErrorBoundary>

@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
+import { exportResumeWithNotification } from '../../../utils/pdfExport';
 
 const ProgressSidebar = ({ currentStep, onStepClick, completedSteps }) => {
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportMessage, setExportMessage] = useState('');
+
+  const handlePDFExport = async () => {
+    setIsExporting(true);
+    setExportMessage('');
+    
+    await exportResumeWithNotification(
+      'resume-template',
+      'ResumeForge_Resume',
+      (message) => {
+        setExportMessage('✓ ' + message);
+        setTimeout(() => setExportMessage(''), 3000);
+      },
+      (message) => {
+        setExportMessage('✗ ' + message);
+        setTimeout(() => setExportMessage(''), 5000);
+      }
+    );
+    
+    setIsExporting(false);
+  };
   const steps = [
     {
       id: 1,
@@ -71,7 +94,7 @@ const ProgressSidebar = ({ currentStep, onStepClick, completedSteps }) => {
     <div className="w-80 bg-background border-r border-border h-full overflow-y-auto">
       <div className="p-6">
         <div className="flex items-center space-x-3 mb-8">
-          <div className="w-10 h-10 bg-gradient-career rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 gradient-career rounded-lg flex items-center justify-center">
             <Icon name="FileText" size={20} color="white" strokeWidth={2.5} />
           </div>
           <div>
@@ -131,7 +154,7 @@ const ProgressSidebar = ({ currentStep, onStepClick, completedSteps }) => {
           </p>
         </div>
 
-        <div className="mt-6 p-4 bg-gradient-career rounded-lg text-white">
+        <div className="mt-6 p-4 gradient-career rounded-lg text-white">
           <div className="flex items-center space-x-2 mb-2">
             <Icon name="Zap" size={16} color="white" />
             <span className="text-sm font-medium">ATS Optimization</span>
@@ -154,10 +177,21 @@ const ProgressSidebar = ({ currentStep, onStepClick, completedSteps }) => {
             <span>Save Draft</span>
           </button>
           
-          <button className="w-full flex items-center justify-center space-x-2 px-4 py-3 border border-border text-foreground rounded-lg hover:bg-muted transition-colors">
-            <Icon name="Download" size={16} />
-            <span>Export PDF</span>
+          <button 
+            onClick={handlePDFExport}
+            disabled={isExporting}
+            className="w-full flex items-center justify-center space-x-2 px-4 py-3 border border-border text-foreground rounded-lg hover:bg-muted transition-colors disabled:opacity-50"
+          >
+            <Icon name={isExporting ? "Loader2" : "Download"} size={16} className={isExporting ? 'animate-spin' : ''} />
+            <span>{isExporting ? 'Generating...' : 'Export PDF'}</span>
           </button>
+          
+          {/* Export Status Message */}
+          {exportMessage && (
+            <div className={`mt-2 p-2 text-xs rounded ${exportMessage.startsWith('✓') ? 'bg-accent/10 text-accent' : 'bg-error/10 text-error'}`}>
+              {exportMessage}
+            </div>
+          )}
         </div>
       </div>
     </div>
